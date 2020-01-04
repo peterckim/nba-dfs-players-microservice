@@ -101,42 +101,6 @@ handlePlayers = ($, tables) => {
     });
 
   updatePlayers(playerRow);
-
-  /* Parse Player Names */
-
-  /* Retrieve Player from Database */
-
-  /* Update Player */
-
-  /* Retrieve Game from Database */
-
-  /* Update Game */
-
-  // playerRow.find("th").each(function(i, elem) {
-  //   playerNames.push(elem.text());
-  // });
-
-  // let finalPlayerNames = playerNames.map(name => {
-  //   return name
-  //     .replace("č", "c")
-  //     .replace("ć", "c")
-  //     .replace("č", "c")
-  //     .replace("ū", "u")
-  //     .replace("ā", "a")
-  //     .replace("ņ", "n")
-  //     .replace("ģ", "g")
-  //     .replace("İ", "I")
-  //     .replace("Č", "C");
-  // });
-
-  // if (playerRow.find("td[data-stat=reason]").length != 0) {
-  //   pts = playerRow.find("td[data-stat=pts]").get_text();
-  //   rebs = playerRow.find("td[data-stat=trb]").get_text();
-  //   asts = playerRow.find("td[data-stat=ast]").get_text();
-  //   stls = playerRow.find("td[data-stat=stl]").get_text();
-  //   blks = playerRow.find("td[data-stat=blk]").get_text();
-  //   tos = playerRow.find("td[data-stat=tov]").get_text();
-  // }
 };
 
 obtainTables = $ => {
@@ -157,26 +121,5 @@ obtainGameDate = $ => {
 
   return date;
 };
-
-// testing = () => {
-//   request(
-//     "https://www.basketball-reference.com/boxscores/202001010WAS.html",
-//     dataTesting
-//   );
-// };
-
-// dataTesting = () => {
-//   if (!error && response.statusCode == 200) {
-//     const $ = cheerio.load(html);
-
-//     $("td[data-stat=box_score_text]")
-//       .children("a")
-//       .each(function(i, elem) {
-//         gameLinks.push(`${baseUrl}${elem.attribs.href}`);
-//       });
-//   }
-// };
-
-// testing();
 
 makeInitialRequest(month, year);

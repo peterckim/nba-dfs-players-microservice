@@ -2,10 +2,12 @@ const fs = require("fs");
 const Player = require("../api/models/player");
 const Game = require("../api/models/game");
 
+/* Read the CSV File */
 readFanduelCSV = fileLocation => {
   fs.readFile(fileLocation, storeData);
 };
 
+/* Parse the Input Data */
 storeData = (error, data) => {
   const arrayOfData = data
     .toString()
@@ -13,9 +15,11 @@ storeData = (error, data) => {
     .split("\n");
   const keys = arrayOfData[0].split(",");
 
+  /* Create Players */
   createPlayers(arrayOfData, keys);
 };
 
+/* Create Player Objects */
 createPlayers = (data, keys) => {
   let players = [];
 
@@ -30,14 +34,16 @@ createPlayers = (data, keys) => {
     players.push(player);
   }
 
-  displayPlayers(players);
+  /* Create New Game Objects or Update Player Position */
   // actionDelegate(players, "createGame");
 };
 
+/* Simple Function to Display Players in the Console */
 displayPlayers = players => {
   console.log(players);
 };
 
+/* Loop through all the players, then either create game or update position */
 actionDelegate = (players, action) => {
   players.forEach(el =>
     action == "createGame"
@@ -46,6 +52,7 @@ actionDelegate = (players, action) => {
   );
 };
 
+/* Retrieve player entry from Database */
 findPlayer = player => {
   return Player.findOne({
     where: {
@@ -54,6 +61,7 @@ findPlayer = player => {
   });
 };
 
+/* Create a Game Object from CSV Data and Insert into database */
 async function createGameAndAddToDB(player) {
   const row = await findPlayer(player);
 
@@ -65,6 +73,7 @@ async function createGameAndAddToDB(player) {
   });
 }
 
+/* Update Player's Position from CSV Data and Insert into database */
 async function updatePlayerPositionToDB(player) {
   const row = await findPlayer(player);
 
@@ -75,23 +84,3 @@ async function updatePlayerPositionToDB(player) {
 }
 
 readFanduelCSV("./data/FanDuel-NBA-2020-01-04-42354-players-list.csv");
-
-/* Knapsack Problem */
-/* Weight = Salary */
-/* Value = FPPG */
-/* W = 60000 */
-
-// knapSack = (W, players, n) => {
-//   if (n == 0 || W == 0) {
-//     return 0;
-//   }
-//   if (parseInt(players[n - 1].Salary) > W) {
-//     return knapSack(W, players, n - 1);
-//   } else {
-//     return Math.max(
-//       parseFloat(players[n - 1].FPPG) +
-//       knapSack(W - parseInt(players[n - 1].Salary), players, n - 1),
-//       knapSack(W, players, n - 1)
-//     );
-//   }
-// };
