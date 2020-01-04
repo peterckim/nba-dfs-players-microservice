@@ -15,15 +15,9 @@ Player.init(
     position: Sequelize.STRING
   },
   {
-    // The name of the model. The model will be stored in `sequelize.models` under this name.
-    // This defaults to class name i.e. Bar in this case. This will control name of auto-generated
-    // foreignKey and association naming
     modelName: "player",
-    // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: false,
-    // define the table's name
     tableName: "players",
-    // Sequelize instance
     sequelize: db
   }
 );
