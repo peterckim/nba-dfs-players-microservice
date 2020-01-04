@@ -5,10 +5,10 @@ const Player = require("../api/models/player");
 const Game = require("../api/models/game");
 
 var baseUrl = "https://www.basketball-reference.com";
-var month = "november";
+var month = "january";
 var year = "2020";
 
-/* Obtain Individual Game Links from Wrapper Site */
+/* Obtain Individual Game Links from Main Page */
 makeInitialRequest = (month, year) => {
   request(
     `${baseUrl}/leagues/NBA_${year}_games-${month}.html`,
@@ -47,27 +47,47 @@ obtainGameData = (error, response, html) => {
 
     const tables = obtainTables($);
 
-    handlePlayers($, tables);
+    handlePlayers($, tables, date);
 
     // console.log(playerRow);
     // $
   }
 };
 
-updatePlayers = rows => {
-  let playerNames = [];
-  console.log(rows.first().text());
-  rows.each(function(i, elem) {
-    playerNames.push(
-      elem
-        .find("th")
-        .first()
-        .text()
-    );
-  });
+async function findPlayerInDB($, name, date, stats) {
+  const player = await findPlayerByName(name);
 
-  let finalPlayerNames = playerNames.map(name => {
-    return name
+  findGameInDB($, player, date, stats);
+}
+
+async function findGameInDB($, player, date, stats) {
+  const game = await findGame(player, date);
+
+  // console.log(game);
+  updateStatistics($, game, stats);
+}
+
+updateStatistics = ($, game, stats) => {
+  if (game.points == null) {
+    game.points = stats.pts;
+    game.rebounds = stats.rebs;
+    game.assists = stats.asts;
+    game.steals = stats.stls;
+    game.blocks = stats.blks;
+    game.turnovers = stats.tos;
+    game.save({
+      fields: ["points", "rebounds", "assists", "steals", "blocks", "turnovers"]
+    });
+  }
+};
+
+updatePlayers = ($, rows, date) => {
+  let playerNames = [];
+  rows.each(function(i, elem) {
+    const name = $(elem)
+      .find("th")
+      .first()
+      .text()
       .replace("č", "c")
       .replace("ć", "c")
       .replace("č", "c")
@@ -77,30 +97,81 @@ updatePlayers = rows => {
       .replace("ģ", "g")
       .replace("İ", "I")
       .replace("Č", "C");
-  });
 
-  getPlayersFromDB(finalPlayerNames);
+    const pts = $(elem)
+      .find("td[data-stat=pts]")
+      .first()
+      .text();
+    const rebs = $(elem)
+      .find("td[data-stat=trb]")
+      .first()
+      .text();
+    const asts = $(elem)
+      .find("td[data-stat=ast]")
+      .first()
+      .text();
+    const stls = $(elem)
+      .find("td[data-stat=stl]")
+      .first()
+      .text();
+    const blks = $(elem)
+      .find("td[data-stat=blk]")
+      .first()
+      .text();
+    const tos = $(elem)
+      .find("td[data-stat=tov]")
+      .first()
+      .text();
+
+    const stats = {
+      pts,
+      rebs,
+      asts,
+      stls,
+      blks,
+      tos
+    };
+    // console.log(stats);
+
+    findPlayerInDB($, name, date, stats);
+
+    // const player = await findPlayerByName(name);
+    // console.log(player);
+    // const date = Date.now();
+    // const game = findGame(player, date);
+    //
+  });
 };
 
-getPlayersFromDB = players => {
-  players.forEach(p => {
-    Player.findOne({
-      where: {
-        name: `${p}`
-      }
-    });
+findGame = (player, date) => {
+  return Game.findOne({
+    where: {
+      playerId: `${player.id}`,
+      date: `${date}`
+    }
   });
 };
 
-handlePlayers = ($, tables) => {
+findPlayerByName = name => {
+  return Player.findOne({
+    where: {
+      name: `${name}`
+    }
+  });
+};
+
+handlePlayers = ($, tables, date) => {
   const playerRow = tables
     .find("tbody")
     .find("tr")
     .filter(function(i, el) {
       return $(this).attr("class") != "thead";
+    })
+    .filter(function(i, el) {
+      return $(this).find("td[data-stat=reason]").length == 0;
     });
 
-  updatePlayers(playerRow);
+  updatePlayers($, playerRow, date);
 };
 
 obtainTables = $ => {
@@ -119,7 +190,59 @@ obtainGameDate = $ => {
     .first()
     .text();
 
-  return date;
+  const dateArray = date.split(", ");
+  const monthDay = dateArray[1].split(" ");
+  let monthNumber = 0;
+
+  switch (monthDay[0]) {
+    case "January":
+      monthNumber = 0;
+      break;
+    case "February":
+      monthNumber = 1;
+      break;
+    case "March":
+      monthNumber = 2;
+      break;
+    case "April":
+      monthNumber = 3;
+      break;
+    case "May":
+      monthNumber = 4;
+      break;
+    case "June":
+      monthNumber = 5;
+      break;
+    case "July":
+      monthNumber = 6;
+      break;
+    case "August":
+      monthNumber = 7;
+      break;
+    case "September":
+      monthNumber = 8;
+      break;
+    case "October":
+      monthNumber = 9;
+      break;
+    case "November":
+      monthNumber = 10;
+      break;
+    case "December":
+      monthNumber = 11;
+      break;
+    default:
+      monthNumber = 0;
+  }
+
+  // console.log(dateArray[2]);
+  // console.log(monthDay[0]);
+  // console.log(monthDay[1]);
+
+  const dateObject = new Date(dateArray[2], monthNumber, monthDay[1]);
+  // console.log(dateObject);
+
+  return dateObject;
 };
 
 makeInitialRequest(month, year);
