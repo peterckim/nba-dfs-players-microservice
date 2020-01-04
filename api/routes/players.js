@@ -5,38 +5,75 @@ const Game = require("../models/game");
 
 router.get("/:playerID", (req, res) => {
   const id = req.params.playerID;
+  const opponent = req.query.opponent;
 
-  Player.findByPk(id, {
-    attributes: {
-      exclude: ["timestamps"]
-    },
-    include: [
-      {
-        model: Game,
-        limit: 10,
-        order: [["date", "DESC"]],
-        attributes: [
-          "id",
-          "date",
-          "price",
-          "opponent",
-          "points",
-          "rebounds",
-          "assists",
-          "steals",
-          "blocks",
-          "turnovers"
-        ]
-      }
-    ]
-  }).then(response => {
-    res.status(200).json({
-      id: response.id,
-      name: response.name,
-      position: response.position,
-      games: response.games
+  if (opponent) {
+    Player.findByPk(id, {
+      attributes: {
+        exclude: ["timestamps"]
+      },
+      include: [
+        {
+          model: Game,
+          where: {
+            opponent: opponent
+          },
+          order: [["date", "DESC"]],
+          attributes: [
+            "id",
+            "date",
+            "price",
+            "opponent",
+            "points",
+            "rebounds",
+            "assists",
+            "steals",
+            "blocks",
+            "turnovers"
+          ]
+        }
+      ]
+    }).then(response => {
+      res.status(200).json({
+        id: response.id,
+        name: response.name,
+        position: response.position,
+        games: response.games
+      });
     });
-  });
+  } else {
+    Player.findByPk(id, {
+      attributes: {
+        exclude: ["timestamps"]
+      },
+      include: [
+        {
+          model: Game,
+          limit: 10,
+          order: [["date", "DESC"]],
+          attributes: [
+            "id",
+            "date",
+            "price",
+            "opponent",
+            "points",
+            "rebounds",
+            "assists",
+            "steals",
+            "blocks",
+            "turnovers"
+          ]
+        }
+      ]
+    }).then(response => {
+      res.status(200).json({
+        id: response.id,
+        name: response.name,
+        position: response.position,
+        games: response.games
+      });
+    });
+  }
 });
 
 router.get("/", (req, res, next) => {
