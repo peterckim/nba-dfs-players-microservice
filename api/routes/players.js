@@ -1,0 +1,67 @@
+const express = require("express");
+const router = express.Router();
+const Player = require("../models/player");
+const Game = require("../models/game");
+
+router.get("/:playerID", (req, res) => {
+  const id = req.params.playerID;
+
+  Player.findByPk(id, {
+    attributes: {
+      exclude: ["timestamps"]
+    },
+    include: [
+      {
+        model: Game,
+        limit: 10,
+        order: [["date", "DESC"]],
+        attributes: [
+          "id",
+          "date",
+          "price",
+          "opponent",
+          "points",
+          "rebounds",
+          "assists",
+          "steals",
+          "blocks",
+          "turnovers"
+        ]
+      }
+    ]
+  }).then(response => {
+    res.status(200).json({
+      id: response.id,
+      name: response.name,
+      position: response.position,
+      games: response.games
+    });
+  });
+});
+
+router.get("/", (req, res, next) => {
+  Player.findAll({
+    attributes: {
+      exclude: ["timestamps"]
+    }
+  }).then(response => {
+    res.status(200).json({
+      count: response.length,
+      players: response.map(el => {
+        return {
+          id: el.id,
+          name: el.name,
+          position: el.position,
+          request: {
+            type: "GET",
+            url: "http://localhost:5000/players/" + el.id
+          }
+        };
+      })
+    });
+  });
+});
+
+router.post("/", (req, res) => {});
+
+module.exports = router;
