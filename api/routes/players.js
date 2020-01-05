@@ -102,7 +102,15 @@ router.get("/", (req, res, next) => {
             url: "http://localhost:5000/players/" + el.id
           }
         };
-      })
+      }),
+      meta: {
+        next: {
+          request: {
+            type: "GET",
+            url: `http://localhost:5000/players?page=${page + 1}&size=${size}`
+          }
+        }
+      }
     });
   });
 });
