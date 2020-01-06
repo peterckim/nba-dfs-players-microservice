@@ -4,6 +4,14 @@
 
 > A data visualization tool for Fanduel NBA DFS
 
+**Code**
+
+![Source Code](http://g.recordit.co/pC41e8Wljw.gif)
+
+**API**
+
+![API](http://g.recordit.co/bdsAryo6du.gif)
+
 ## Table of Contents
 
 - [Documentation](#documentation)
@@ -12,6 +20,8 @@
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
+
+## Documentation
 
 ## **Show Players**
 
