@@ -3,6 +3,13 @@ const router = express.Router();
 const Player = require("../models/player");
 const Game = require("../models/game");
 
+/**
+ * @GET Request
+ * Player Show Route
+ * Optional Params: opponent
+ * URL: /players/:playerID
+ *
+ */
 router.get("/:playerID", async (req, res) => {
   const id = req.params.playerID;
   const opponent = req.query.opponent;
@@ -92,6 +99,12 @@ router.get("/:playerID", async (req, res) => {
   }
 });
 
+/**
+ * @GET Request
+ * Player Index Route
+ * URL: /players
+ *
+ */
 router.get("/", (req, res, next) => {
   const page = parseInt(req.query.page);
   const size = parseInt(req.query.size);
