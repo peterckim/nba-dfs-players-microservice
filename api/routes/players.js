@@ -101,7 +101,7 @@ router.get("/", (req, res, next) => {
           position: el.position,
           request: {
             type: "GET",
-            url: `${req.get("host")}/players/${el.id}`
+            url: `${req.protocol}://${req.get("host")}/players/${el.id}`
           }
         };
       }),
@@ -109,7 +109,8 @@ router.get("/", (req, res, next) => {
         next: {
           request: {
             type: "GET",
-            url: `http://localhost:5000/players?page=${page + 1}&size=${size}`
+            url: `${req.protocol}://${req.get("host")}/players?page=${page +
+              1}&size=${size}`
           }
         }
       }
