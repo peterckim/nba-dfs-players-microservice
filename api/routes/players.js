@@ -90,7 +90,7 @@ router.get("/:playerID", async (req, res) => {
         games: player.games
       });
     } catch (err) {
-      res.status(400).json({
+      res.status(404).json({
         error: {
           message: `Player with id = ${id} does not exist`
         }
