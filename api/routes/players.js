@@ -90,6 +90,8 @@ router.get("/", (req, res, next) => {
     limit: limit,
     offset: offset
   }).then(response => {
+    console.log(req.protocol);
+    console.log(req.get("host"));
     res.status(200).json({
       count: response.length,
       players: response.map(el => {
@@ -99,7 +101,7 @@ router.get("/", (req, res, next) => {
           position: el.position,
           request: {
             type: "GET",
-            url: "http://localhost:5000/players/" + el.id
+            url: `${req.get("host")}/players/${el.id}`
           }
         };
       }),
