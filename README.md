@@ -87,7 +87,7 @@ Returns JSON data about all players.
 - **Error Response:**
 
   - **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Log in" }`
+    **Content:** `{ error : "Player not found." }`
 
   OR
 
@@ -262,7 +262,7 @@ Returns JSON data about a single player.
 - **Error Response:**
 
   - **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Log in" }`
+    **Content:** `{ error : "Player not found." }`
 
   OR
 
