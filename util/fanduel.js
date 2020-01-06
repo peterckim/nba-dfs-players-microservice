@@ -35,7 +35,8 @@ createPlayers = (data, keys) => {
   }
 
   /* Create New Game Objects or Update Player Position */
-  // actionDelegate(players, "createGame");
+  actionDelegate(players, "updatePosition");
+  actionDelegate(players, "createGame");
 };
 
 /* Simple Function to Display Players in the Console */
@@ -83,4 +84,4 @@ async function updatePlayerPositionToDB(player) {
   }
 }
 
-readFanduelCSV("./data/FanDuel-NBA-2020-01-04-42354-players-list.csv");
+readFanduelCSV("./data/FanDuel-NBA-2020-01-06-42412-players-list.csv");

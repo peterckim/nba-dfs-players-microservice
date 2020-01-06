@@ -30,6 +30,10 @@ app.use((req, res, next) => {
 /* Routes */
 app.use("/players", playerRoutes);
 
+app.get("/", (req, res) => {
+  res.send("NBA DFS (Fanduel) API");
+});
+
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
