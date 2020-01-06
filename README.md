@@ -1,5 +1,18 @@
 <a href="http://peterckim.com"><img src="images/logo.png" title="Peter Kim" alt="Peter Kim"></a>
 
+# NBA DFS API
+
+> A data visualization tool for Fanduel NBA DFS
+
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Team](#team)
+- [FAQ](#faq)
+- [Support](#support)
+- [License](#license)
+
 ## **Show Players**
 
 Returns JSON data about all players.
