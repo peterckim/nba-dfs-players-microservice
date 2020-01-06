@@ -6,11 +6,11 @@
 
 **Code**
 
-![Source Code](http://g.recordit.co/pC41e8Wljw.gif)
+![Source Code](images/code.gif)
 
 **API**
 
-![API](images/code.gif)
+![API](http://g.recordit.co/pC41e8Wljw.gif)
 
 ---
 
