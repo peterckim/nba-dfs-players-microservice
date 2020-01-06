@@ -45,7 +45,7 @@ router.get("/:playerID", async (req, res) => {
     } catch (err) {
       res.status(404).json({
         error: {
-          message: err
+          message: "Player does not exist"
         }
       });
     }
@@ -85,7 +85,7 @@ router.get("/:playerID", async (req, res) => {
     } catch (err) {
       res.status(400).json({
         error: {
-          message: err
+          message: `Player with id = ${id} does not exist`
         }
       });
     }
