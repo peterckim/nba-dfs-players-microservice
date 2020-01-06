@@ -1,3 +1,5 @@
+<a href="http://peterckim.com"><img src="images/logo.png" title="Peter Kim" alt="Peter Kim"></a>
+
 ## **Show Players**
 
 Returns JSON data about all players.
@@ -18,7 +20,7 @@ Returns JSON data about all players.
 
   **Optional:**
 
-  `page=[integer]`
+  `page=[integer]`,
   `size=[integer]`
 
 - **Data Params**
@@ -74,7 +76,8 @@ Returns JSON data about a single player.
 - **Success Response:**
 
   - **Code:** 200 <br />
-    **Content:** `{ id: 1, name: "Jrue Holiday", position: "SG", games: [ { id: 12072, date: "2020-01-06", price: 8000, opponent: "UTA", points: null, rebounds: null, assists: null, steals: null, blocks: null, turnovers: null }, { id: 11476, date: "2020-01-04", price: 8300, opponent: "SAC", points: 19, rebounds: 5, assists: 7, steals: 1, blocks: 0, turnovers: 3 }, { id: 11802, date: "2020-01-03", price: 8400, opponent: "LAL", points: 12, rebounds: 3, assists: 6, steals: 1, blocks: 1, turnovers: 3 }, { id: 10364, date: "2019-12-29", price: null, opponent: null, points: 25, rebounds: 2, assists: 5, steals: 0, blocks: 2, turnovers: 0 }, { id: 10048, date: "2019-12-28", price: null, opponent: null, points: 20, rebounds: 3, assists: 7, steals: 2, blocks: 1, turnovers: 3 }, { id: 9710, date: "2019-12-25", price: null, opponent: null, points: 20, rebounds: 4, assists: 8, steals: 6, blocks: 0, turnovers: 4 }, { id: 9562, date: "2019-12-23", price: null, opponent: null, points: 21, rebounds: 6, assists: 5, steals: 1, blocks: 0, turnovers: 2 }, { id: 9075, date: "2019-12-20", price: null, opponent: null, points: 25, rebounds: 8, assists: 4, steals: 0, blocks: 0, turnovers: 3 }, { id: 8693, date: "2019-12-18", price: null, opponent: null, points: 18, rebounds: 3, assists: 3, steals: 2, blocks: 0, turnovers: 2 }, { id: 8560, date: "2019-12-17", price: null, opponent: null, points: 21, rebounds: 5, assists: 6, steals: 1, blocks: 2, turnovers: 0 } ] }`
+    **Content:**
+    `{ id: 1, name: "Jrue Holiday", position: "SG", games: [ { id: 12072, date: "2020-01-06", price: 8000, opponent: "UTA", points: null, rebounds: null, assists: null, steals: null, blocks: null, turnovers: null }, { id: 11476, date: "2020-01-04", price: 8300, opponent: "SAC", points: 19, rebounds: 5, assists: 7, steals: 1, blocks: 0, turnovers: 3 }, { id: 11802, date: "2020-01-03", price: 8400, opponent: "LAL", points: 12, rebounds: 3, assists: 6, steals: 1, blocks: 1, turnovers: 3 }, { id: 10364, date: "2019-12-29", price: null, opponent: null, points: 25, rebounds: 2, assists: 5, steals: 0, blocks: 2, turnovers: 0 }, { id: 10048, date: "2019-12-28", price: null, opponent: null, points: 20, rebounds: 3, assists: 7, steals: 2, blocks: 1, turnovers: 3 }, { id: 9710, date: "2019-12-25", price: null, opponent: null, points: 20, rebounds: 4, assists: 8, steals: 6, blocks: 0, turnovers: 4 }, { id: 9562, date: "2019-12-23", price: null, opponent: null, points: 21, rebounds: 6, assists: 5, steals: 1, blocks: 0, turnovers: 2 }, { id: 9075, date: "2019-12-20", price: null, opponent: null, points: 25, rebounds: 8, assists: 4, steals: 0, blocks: 0, turnovers: 3 }, { id: 8693, date: "2019-12-18", price: null, opponent: null, points: 18, rebounds: 3, assists: 3, steals: 2, blocks: 0, turnovers: 2 }, { id: 8560, date: "2019-12-17", price: null, opponent: null, points: 21, rebounds: 5, assists: 6, steals: 1, blocks: 2, turnovers: 0 }s ] }`
 
 - **Error Response:**
 
