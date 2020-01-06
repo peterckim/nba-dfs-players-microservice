@@ -3,76 +3,92 @@ const router = express.Router();
 const Player = require("../models/player");
 const Game = require("../models/game");
 
-router.get("/:playerID", (req, res) => {
+router.get("/:playerID", async (req, res) => {
   const id = req.params.playerID;
   const opponent = req.query.opponent;
 
   if (opponent) {
-    Player.findByPk(id, {
-      attributes: {
-        exclude: ["timestamps"]
-      },
-      include: [
-        {
-          model: Game,
-          where: {
-            opponent: opponent
-          },
-          order: [["date", "DESC"]],
-          attributes: [
-            "id",
-            "date",
-            "price",
-            "opponent",
-            "points",
-            "rebounds",
-            "assists",
-            "steals",
-            "blocks",
-            "turnovers"
-          ]
-        }
-      ]
-    }).then(response => {
-      res.status(200).json({
-        id: response.id,
-        name: response.name,
-        position: response.position,
-        games: response.games
+    try {
+      const player = await Player.findByPk(id, {
+        attributes: {
+          exclude: ["timestamps"]
+        },
+        include: [
+          {
+            model: Game,
+            where: {
+              opponent: opponent
+            },
+            order: [["date", "DESC"]],
+            attributes: [
+              "id",
+              "date",
+              "price",
+              "opponent",
+              "points",
+              "rebounds",
+              "assists",
+              "steals",
+              "blocks",
+              "turnovers"
+            ]
+          }
+        ]
       });
-    });
+
+      res.status(200).json({
+        id: player.id,
+        name: player.name,
+        position: player.position,
+        games: player.games
+      });
+    } catch (err) {
+      res.status(404).json({
+        error: {
+          message: err
+        }
+      });
+    }
   } else {
-    Player.findByPk(id, {
-      attributes: {
-        exclude: ["timestamps"]
-      },
-      include: [
-        {
-          model: Game,
-          limit: 10,
-          order: [["date", "DESC"]],
-          attributes: [
-            "id",
-            "date",
-            "price",
-            "opponent",
-            "points",
-            "rebounds",
-            "assists",
-            "steals",
-            "blocks",
-            "turnovers"
-          ]
-        }
-      ]
-    }).then(response => {
-      res.status(200).json({
-        id: response.id,
-        name: response.name,
-        position: response.position,
-        games: response.games
+    try {
+      const player = await Player.findByPk(id, {
+        attributes: {
+          exclude: ["timestamps"]
+        },
+        include: [
+          {
+            model: Game,
+            limit: 10,
+            order: [["date", "DESC"]],
+            attributes: [
+              "id",
+              "date",
+              "price",
+              "opponent",
+              "points",
+              "rebounds",
+              "assists",
+              "steals",
+              "blocks",
+              "turnovers"
+            ]
+          }
+        ]
       });
-    });
+
+      res.status(200).json({
+        id: player.id,
+        name: player.name,
+        position: player.position,
+        games: player.games
+      });
+    } catch (err) {
+      res.status(400).json({
+        error: {
+          message: err
+        }
+      });
+    }
   }
 });
 
