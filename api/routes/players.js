@@ -90,8 +90,6 @@ router.get("/", (req, res, next) => {
     limit: limit,
     offset: offset
   }).then(response => {
-    console.log(req.protocol);
-    console.log(req.get("host"));
     res.status(200).json({
       count: response.length,
       players: response.map(el => {
