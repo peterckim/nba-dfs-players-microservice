@@ -11,12 +11,12 @@ const Game = require("../models/game");
  *
  */
 router.get("/:playerID", async (req, res) => {
-  const id = req.params.playerID;
+  const playerid = req.params.playerID;
   const opponent = req.query.opponent;
 
   if (opponent) {
     try {
-      const player = await Player.findByPk(id, {
+      const player = await Player.findByPk(playerid, {
         attributes: {
           exclude: ["timestamps"]
         },
@@ -43,22 +43,30 @@ router.get("/:playerID", async (req, res) => {
         ]
       });
 
-      res.status(200).json({
-        id: player.id,
-        name: player.name,
-        position: player.position,
-        games: player.games
-      });
+      if (player) {
+        const { id, name, position, games } = player;
+
+        res.status(200).json({
+          id,
+          name,
+          position,
+          games
+        });
+      } else {
+        res.status(404).json({
+          message: "No valid entry found for provided ID"
+        });
+      }
     } catch (err) {
-      res.status(404).json({
+      res.status(500).json({
         error: {
-          message: "Player does not exist"
+          err
         }
       });
     }
   } else {
     try {
-      const player = await Player.findByPk(id, {
+      const player = await Player.findByPk(playerid, {
         attributes: {
           exclude: ["timestamps"]
         },
@@ -83,16 +91,24 @@ router.get("/:playerID", async (req, res) => {
         ]
       });
 
-      res.status(200).json({
-        id: player.id,
-        name: player.name,
-        position: player.position,
-        games: player.games
-      });
+      if (player) {
+        const { id, name, position, games } = player;
+
+        res.status(200).json({
+          id,
+          name,
+          position,
+          games
+        });
+      } else {
+        res.status(404).json({
+          message: `Player with id = ${playerid} does not exist`
+        });
+      }
     } catch (err) {
-      res.status(404).json({
+      res.status(500).json({
         error: {
-          message: `Player with id = ${id} does not exist`
+          err
         }
       });
     }
