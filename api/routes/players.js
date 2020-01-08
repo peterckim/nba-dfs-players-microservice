@@ -5,9 +5,10 @@ const Game = require("../models/game");
 
 /**
  * @GET Request
- * Player Show Route
- * Optional Params: opponent
- * URL: /players/:playerID
+ * @route   Player Show Route
+ * @params  playerID
+ * @query   opponent
+ * @url     /players/:playerID
  *
  */
 router.get("/:playerID", async (req, res) => {
@@ -54,7 +55,7 @@ router.get("/:playerID", async (req, res) => {
         });
       } else {
         res.status(404).json({
-          message: "No valid entry found for provided ID"
+          message: "No valid entry found for provided ID and opponent"
         });
       }
     } catch (err) {
@@ -117,31 +118,34 @@ router.get("/:playerID", async (req, res) => {
 
 /**
  * @GET Request
- * Player Index Route
- * URL: /players
+ * @route   Player Index Route
+ * @url     /players/:playerID
  *
  */
-router.get("/", (req, res, next) => {
-  const page = parseInt(req.query.page);
-  const size = parseInt(req.query.size);
+router.get("/", async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page);
+    const size = parseInt(req.query.size);
 
-  const offset = page * size;
-  const limit = size;
+    const offset = page * size;
+    const limit = size;
 
-  Player.findAll({
-    attributes: {
-      exclude: ["timestamps"]
-    },
-    limit: limit,
-    offset: offset
-  }).then(response => {
+    const players = await Player.findAll({
+      attributes: {
+        exclude: ["timestamps"]
+      },
+      limit: limit,
+      offset: offset
+    });
+
     res.status(200).json({
-      count: response.length,
-      players: response.map(el => {
+      count: players.length,
+      players: players.map(el => {
+        const { id, name, position } = el;
         return {
-          id: el.id,
-          name: el.name,
-          position: el.position,
+          id,
+          name,
+          position,
           request: {
             type: "GET",
             url: `${req.protocol}://${req.get("host")}/players/${el.id}`
@@ -158,9 +162,20 @@ router.get("/", (req, res, next) => {
         }
       }
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      err
+    });
+  }
 });
 
-router.post("/", (req, res) => {});
+/**
+ * @POST Request
+ * @route   Player Post Route
+ * @params  playerID
+ * @url     /players/:playerID
+ *
+ */
+router.post("/:playerID", (req, res) => {});
 
 module.exports = router;
