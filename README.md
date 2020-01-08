@@ -69,7 +69,7 @@ Returns JSON data about all players.
           "position": "SG",
           "request": {
             "type": "GET",
-            "url": "http://afternoon-temple-74443.herokuapp.com/players/1"
+            "url": "https://nba-fantasy-dfs-tool.herokuapp.com/players/1"
           }
         }
       ],
@@ -77,7 +77,7 @@ Returns JSON data about all players.
         "next": {
           "request": {
             "type": "GET",
-            "url": "http://afternoon-temple-74443.herokuapp.com/players?page=2&size=1"
+            "url": "https://nba-fantasy-dfs-tool.herokuapp.com/players?page=2&size=1"
           }
         }
       }
@@ -97,7 +97,7 @@ Returns JSON data about all players.
 - **Sample Call:**
 
   ```javascript
-  fetch("http://localhost:5000/players?page=0&size=1")
+  fetch("https://nba-fantasy-dfs-tool.herokuapp.com/players?page=0&size=1")
     .then(resp => resp.json())
     .then(data => console.log(data))
     .catch(err => console.log(err));
@@ -272,7 +272,7 @@ Returns JSON data about a single player.
 - **Sample Call:**
 
   ```javascript
-  fetch("http://localhost:5000/players/1")
+  fetch("https://nba-fantasy-dfs-tool.herokuapp.com/players/1")
     .then(resp => resp.json())
     .then(data => console.log(data))
     .catch(err => console.log(err));
@@ -291,7 +291,7 @@ Returns JSON data about a single player.
   - 🍴 Fork this repo!
 
 - **Option 2**
-  - 👯 Clone this repo to your local machine using `https://github.com/joanaz/HireDot2.git`
+  - 👯 Clone this repo to your local machine using `https://github.com/peterckim/nba-dfs-api.git`
 
 ### Step 2
 
