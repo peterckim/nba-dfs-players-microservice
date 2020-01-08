@@ -2,6 +2,11 @@ const Sequelize = require("sequelize");
 const Model = Sequelize.Model;
 const db = require("../sequelize");
 
+/**
+ * Sequelize Game Model
+ * @attributes      [id, date, opponent, price, points, rebounds, assists, steals, blocks, turnovers]
+ * @relationships   belongsTo Player
+ */
 class Game extends Model {}
 Game.init(
   {
