@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const Player = require("../models/player");
-const Game = require("../models/game");
 const redis = require("redis");
 const PlayerService = require("../services/player-service");
 
