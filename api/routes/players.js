@@ -3,8 +3,6 @@ const router = express.Router();
 const redis = require("redis");
 const PlayerService = require("../services/player-service");
 
-const client = redis.createClient(6379);
-
 /**
  * @GET Request
  * @route   Player Show Route
