@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const redis = require("redis");
 const PlayerService = require("../services/player-service");
 
 /**
