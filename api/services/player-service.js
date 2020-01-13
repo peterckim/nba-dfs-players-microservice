@@ -67,6 +67,21 @@ const PlayerService = {
   },
 
   /**
+   * Find player with name from database
+   * @param {String} name
+   */
+  findPlayerByName: async function(name) {
+    const player = await Player.findOne({
+      where: { name },
+      attributes: {
+        exclude: ["timestamps"]
+      }
+    });
+
+    return player;
+  },
+
+  /**
    * Method to grab all players from database
    * @param {int} offset
    * @param {int} limit

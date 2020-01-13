@@ -95,17 +95,29 @@ router.get("/", async (req, res, next) => {
  */
 router.post("/:playerID", async (req, res) => {
   try {
+    const {
+      date,
+      opponent,
+      price,
+      points,
+      rebounds,
+      assists,
+      steals,
+      blocks,
+      turnovers
+    } = req.body;
+
     const gameData = {
       playerId: req.params.playerID,
-      date: req.body.date,
-      opponent: req.body.opponent,
-      price: req.body.price,
-      points: req.body.points,
-      rebounds: req.body.rebounds,
-      assists: req.body.assists,
-      steals: req.body.steals,
-      blocks: req.body.blocks,
-      turnovers: req.body.turnovers
+      date,
+      opponent,
+      price,
+      points,
+      rebounds,
+      assists,
+      steals,
+      blocks,
+      turnovers
     };
 
     const game = PlayerService.addGameToPlayer(gameData);
@@ -126,9 +138,11 @@ router.post("/:playerID", async (req, res) => {
  */
 router.post("/", async (req, res) => {
   try {
+    const { name, position } = req.body;
+
     const playerData = {
-      name: req.body.name,
-      position: req.body.position
+      name,
+      position
     };
 
     const player = await PlayerService.addPlayer(playerData);
@@ -140,5 +154,11 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+/**
+ * TODO
+ *  1. Update Player's Game Route
+ *  2. Get Player By Name Route
+ */
 
 module.exports = router;
