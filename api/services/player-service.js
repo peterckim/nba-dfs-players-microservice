@@ -68,8 +68,8 @@ const PlayerService = {
 
   /**
    * Method to grab all players from database
-   * @param {int} id
-   * @param {String} opponent
+   * @param {int} offset
+   * @param {int} limit
    */
   getAllPlayers: async function(offset, limit) {
     const players = await Player.findAll({
@@ -85,8 +85,7 @@ const PlayerService = {
 
   /**
    * Method to add player to database
-   * @param {int} id
-   * @param {String} opponent
+   * @param {object} playerData
    */
   addPlayer: async function(playerData) {
     const player = await Player.create(playerData);
@@ -96,8 +95,7 @@ const PlayerService = {
 
   /**
    * Method to add game to player to database
-   * @param {int} id
-   * @param {String} opponent
+   * @param {object} gameData
    */
   addGameToPlayer: async function(gameData) {
     const game = await Game.create(gameData);
