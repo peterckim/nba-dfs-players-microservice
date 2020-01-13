@@ -28,9 +28,9 @@ app.use((req, res, next) => {
 });
 
 /* Routes */
-app.use("/players", playerRoutes);
+app.use("/api/v1/players", playerRoutes);
 
-app.get("/", (req, res) => {
+app.get("/api/v1", (req, res) => {
   res.send("NBA DFS (Fanduel) API");
 });
 

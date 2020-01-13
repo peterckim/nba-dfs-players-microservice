@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Player = require("../models/player");
 const Game = require("../models/game");
+const redis = require("redis");
+const PlayerService = require("../services/player-service");
+
+const client = redis.createClient(6379);
 
 /**
  * @GET Request
@@ -12,107 +16,31 @@ const Game = require("../models/game");
  *
  */
 router.get("/:playerID", async (req, res) => {
-  const playerid = req.params.playerID;
-  const opponent = req.query.opponent;
+  try {
+    const playerid = req.params.playerID;
+    const opponent = req.query.opponent;
+    const player = await PlayerService.findPlayerById(playerid, opponent);
 
-  if (opponent) {
-    try {
-      const player = await Player.findByPk(playerid, {
-        attributes: {
-          exclude: ["timestamps"]
-        },
-        include: [
-          {
-            model: Game,
-            where: {
-              opponent: opponent
-            },
-            order: [["date", "DESC"]],
-            attributes: [
-              "id",
-              "date",
-              "price",
-              "opponent",
-              "points",
-              "rebounds",
-              "assists",
-              "steals",
-              "blocks",
-              "turnovers"
-            ]
-          }
-        ]
+    if (player) {
+      const { id, name, position, games } = player;
+
+      res.status(200).json({
+        id,
+        name,
+        position,
+        games
       });
-
-      if (player) {
-        const { id, name, position, games } = player;
-
-        res.status(200).json({
-          id,
-          name,
-          position,
-          games
-        });
-      } else {
-        res.status(404).json({
-          message: "No valid entry found for provided ID and opponent"
-        });
-      }
-    } catch (err) {
-      res.status(500).json({
-        error: {
-          err
-        }
+    } else {
+      res.status(404).json({
+        message: "No valid entry found for provided ID and opponent"
       });
     }
-  } else {
-    try {
-      const player = await Player.findByPk(playerid, {
-        attributes: {
-          exclude: ["timestamps"]
-        },
-        include: [
-          {
-            model: Game,
-            limit: 10,
-            order: [["date", "DESC"]],
-            attributes: [
-              "id",
-              "date",
-              "price",
-              "opponent",
-              "points",
-              "rebounds",
-              "assists",
-              "steals",
-              "blocks",
-              "turnovers"
-            ]
-          }
-        ]
-      });
-
-      if (player) {
-        const { id, name, position, games } = player;
-
-        res.status(200).json({
-          id,
-          name,
-          position,
-          games
-        });
-      } else {
-        res.status(404).json({
-          message: `Player with id = ${playerid} does not exist`
-        });
+  } catch (err) {
+    res.status(500).json({
+      error: {
+        err
       }
-    } catch (err) {
-      res.status(500).json({
-        error: {
-          err
-        }
-      });
-    }
+    });
   }
 });
 
@@ -130,13 +58,7 @@ router.get("/", async (req, res, next) => {
     const offset = page * size;
     const limit = size;
 
-    const players = await Player.findAll({
-      attributes: {
-        exclude: ["timestamps"]
-      },
-      limit: limit,
-      offset: offset
-    });
+    const players = await PlayerService.getAllPlayers(offset, limit);
 
     res.status(200).json({
       count: players.length,
@@ -176,6 +98,52 @@ router.get("/", async (req, res, next) => {
  * @url     /players/:playerID
  *
  */
-router.post("/:playerID", (req, res) => {});
+router.post("/:playerID", async (req, res) => {
+  try {
+    const gameData = {
+      playerId: req.params.playerID,
+      date: req.body.date,
+      opponent: req.body.opponent,
+      price: req.body.price,
+      points: req.body.points,
+      rebounds: req.body.rebounds,
+      assists: req.body.assists,
+      steals: req.body.steals,
+      blocks: req.body.blocks,
+      turnovers: req.body.turnovers
+    };
+
+    const game = PlayerService.addGameToPlayer(gameData);
+    res.status(201).json(game);
+  } catch (err) {
+    res.status(500).json({
+      err
+    });
+  }
+});
+
+/**
+ * @POST Request
+ * @route   Player Post Route
+ * @params  playerID
+ * @url     /players
+ *
+ */
+router.post("/", async (req, res) => {
+  try {
+    const playerData = {
+      name: req.body.name,
+      position: req.body.position
+    };
+
+    const player = await PlayerService.addPlayer(playerData);
+
+    res.status(201).json(player);
+  } catch (err) {
+    res.status(500).json({
+      err
+    });
+  }
+});
 
 module.exports = router;
