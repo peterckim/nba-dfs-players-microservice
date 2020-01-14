@@ -8,7 +8,7 @@ db.authenticate()
   .catch(err => console.log("Error: " + err));
 
 const app = express();
-const playerRoutes = require("./api/routes/players");
+const playerController = require("./api/controllers/players");
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 
 /* Routes */
-app.use("/api/v1/players", playerRoutes);
+app.use("/api/v1/players", playerController);
 
 app.get("/api/v1", (req, res) => {
   res.send("NBA DFS (Fanduel) API");
