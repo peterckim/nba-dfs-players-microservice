@@ -1,8 +1,8 @@
 <a href="http://peterckim.com"><img src="images/logo.png" title="Peter Kim" alt="Peter Kim"></a>
 
-# NBA DFS API
+# NBA DFS MICROSERVICE
 
-> A data visualization tool for Fanduel NBA DFS
+> A microservice that handles NBA player data
 
 **Code**
 
