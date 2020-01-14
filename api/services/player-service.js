@@ -118,6 +118,11 @@ const PlayerService = {
     return game;
   },
 
+  /**
+   * Method to update player
+   * @param {int} playerId
+   * @param {object} data
+   */
   updatePlayer: async function(playerId, data) {
     const { name, position } = data;
     const player = await Player.update(
@@ -129,6 +134,18 @@ const PlayerService = {
         where: { id: playerId }
       }
     );
+
+    return player;
+  },
+
+  /**
+   * Method to delete player
+   * @param {int} playerId
+   */
+  deletePlayer: async function(playerId) {
+    const player = await Player.destroy({
+      where: { id: playerId }
+    });
 
     return player;
   }
