@@ -155,12 +155,6 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * TODO
- *  1. Update Player's Game Route
- *  2. Get Player By Name Route
- */
-
-/**
  * @PATCH Request
  * @route   Player Patch Route
  * @params  playerID
