@@ -109,7 +109,7 @@ Returns JSON data about a single player.
 
 - **URL**
 
-  /player/:id
+  /players/:id
 
 - **Method:**
 
@@ -129,6 +129,7 @@ Returns JSON data about a single player.
 
   - **Code:** 200 <br />
     **Content:**
+
     ```json
     {
       "id": 1,
@@ -259,10 +260,43 @@ Returns JSON data about a single player.
     }
     ```
 
+## **Create New Player**
+
+Adds a new Player to the database
+
+- **URL**
+
+  /players
+
+- **Method:**
+
+  `POST`
+
+- **URL Params**
+
+None
+
+- **Data Params**
+
+  `name=[String]`,
+  `position=[String]`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "id": 1,
+      "name": "Jrue Holiday",
+      "position": "SG"
+    }
+    ```
+
 - **Error Response:**
 
-  - **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Player not found." }`
+  - **Code:** 400 CREATION UNSUCCESFUL <br />
+    **Content:** `{ error : "Player not created." }`
 
   OR
 
@@ -272,7 +306,116 @@ Returns JSON data about a single player.
 - **Sample Call:**
 
   ```javascript
-  fetch("https://nba-fantasy-dfs-tool.herokuapp.com/players/1")
+  fetch("https://nba-fantasy-dfs-tool.herokuapp.com/players", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+  ```
+
+## **Update Player**
+
+Updates an existing Player
+
+- **URL**
+
+  /players/:playerID
+
+- **Method:**
+
+  `PATCH`
+
+- **URL Params**
+
+  **Required:**
+
+  `id=[integer]`
+
+- **Data Params**
+
+  `name=[String]`,
+  `position=[String]`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "message" "player with id ${id} succesfully updated"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 UPDATE UNSUCCESFUL <br />
+    **Content:** `{ message : "Player update unsuccesful" }`
+
+  OR
+
+  - **Code:** 500 ERROR <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+- **Sample Call:**
+
+  ```javascript
+  fetch("https://nba-fantasy-dfs-tool.herokuapp.com/players/1", {
+    method: "PATCH",
+    body: JSON.stringify(data)
+  })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+  ```
+
+## **Delete Player**
+
+Deletes a Player
+
+- **URL**
+
+  /players/:playerID
+
+- **Method:**
+
+  `DELETE`
+
+- **URL Params**
+
+  **Required:**
+
+  `id=[integer]`
+
+- **Data Params**
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "message" "player with id ${id} succesfully deleted"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 DELETION UNSUCCESFUL <br />
+    **Content:** `{ "message" : "Player deletion unsuccesful }`
+
+  OR
+
+  - **Code:** 500 ERROR <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+- **Sample Call:**
+
+  ```javascript
+  fetch("https://nba-fantasy-dfs-tool.herokuapp.com/players/1", {
+    method: "DELETE"
+  })
     .then(resp => resp.json())
     .then(data => console.log(data))
     .catch(err => console.log(err));
