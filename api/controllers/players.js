@@ -42,7 +42,7 @@ router.get("/:playerID", async (req, res) => {
 /**
  * @GET Request
  * @route   Player Index Route
- * @url     /players/:playerID
+ * @url     /players
  *
  */
 router.get("/", async (req, res, next) => {
@@ -132,7 +132,6 @@ router.post("/:playerID", async (req, res) => {
 /**
  * @POST Request
  * @route   Player Post Route
- * @params  playerID
  * @url     /players
  *
  */
@@ -161,6 +160,13 @@ router.post("/", async (req, res) => {
  *  2. Get Player By Name Route
  */
 
+/**
+ * @PATCH Request
+ * @route   Player Patch Route
+ * @params  playerID
+ * @url     /players/:playerID
+ *
+ */
 router.patch("/:playerID", async (req, res) => {
   const id = req.params.playerID;
   const { name, position } = req.body;
