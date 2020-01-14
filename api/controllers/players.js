@@ -5,7 +5,7 @@ const PlayerService = require("../services/player-service");
 /**
  * @GET Request
  * @route   Player Show Route
- * @params  playerID
+ * @param   {int} playerID
  * @query   opponent
  * @url     /players/:playerID
  */
@@ -87,7 +87,7 @@ router.get("/", async (req, res, next) => {
 /**
  * @POST Request
  * @route   Player Post Route
- * @params  playerID
+ * @param   {int} playerID
  * @url     /players/:playerID
  */
 router.post("/:playerID", async (req, res) => {
@@ -153,7 +153,7 @@ router.post("/", async (req, res) => {
 /**
  * @PATCH Request
  * @route   Player Patch Route
- * @params  playerID
+ * @param   {int} playerID
  * @url     /players/:playerID
  */
 router.patch("/:playerID", async (req, res) => {
@@ -187,7 +187,7 @@ router.patch("/:playerID", async (req, res) => {
 /**
  * @DELETE Request
  * @route   Player Delete Route
- * @params  playerID
+ * @param   {int} playerID
  * @url     /players/:playerID
  */
 router.delete("/:playerID", async (req, res) => {
