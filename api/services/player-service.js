@@ -12,7 +12,7 @@ const PlayerService = {
    */
   findPlayerById: async function(id, opponent) {
     const player = opponent
-      ? await Player.findByPk(playerid, {
+      ? await Player.findByPk(id, {
           attributes: {
             exclude: ["timestamps"]
           },
@@ -116,6 +116,21 @@ const PlayerService = {
     const game = await Game.create(gameData);
 
     return game;
+  },
+
+  updatePlayer: async function(playerId, data) {
+    const { name, position } = data;
+    const player = await Player.update(
+      {
+        name,
+        position
+      },
+      {
+        where: { id: playerId }
+      }
+    );
+
+    return player;
   }
 };
 

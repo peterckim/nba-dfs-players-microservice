@@ -161,4 +161,27 @@ router.post("/", async (req, res) => {
  *  2. Get Player By Name Route
  */
 
+router.patch("/:playerID", async (req, res) => {
+  const id = req.params.playerID;
+  const { name, position } = req.body;
+
+  const playerData = {
+    name,
+    position
+  };
+  console.log(id);
+
+  const player = await PlayerService.updatePlayer(id, playerData);
+
+  console.log(player);
+
+  if (player) {
+    res.status(200).json(player);
+  } else {
+    res.status(400).json({
+      message: "player update unsuccesful"
+    });
+  }
+});
+
 module.exports = router;
