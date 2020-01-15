@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
-const keys = require("../config/config");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 /* Connect to MS SQL Server db */
 const sequelize = new Sequelize(
